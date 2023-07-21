@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.rmax.Auth.CustomValidators.EmailValidator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +35,7 @@ public class Tenant implements UserDetails{
     @Column(unique = true, nullable = false)
     private String username;
     @Column(unique = true, nullable = false)
+    @EmailValidator
     private String email;
     @Enumerated(EnumType.STRING)
     @Column(unique = false, nullable = false)
