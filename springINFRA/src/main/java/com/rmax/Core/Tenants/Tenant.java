@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.rmax.Auth.AuthDTOs.CustomAuthorityDeserializer;
+import com.rmax.Auth.Security.CustomAuthorityDeserializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,12 +25,18 @@ public class Tenant implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+    @Column(unique = false, nullable = false)
     private String firstName;
+    @Column(unique = false, nullable = false)
     private String lastName;
+    @Column(unique = false, nullable = false)
     private String password;
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(unique = true, nullable = false)
     private String email;
     @Enumerated(EnumType.STRING)
+    @Column(unique = false, nullable = false)
     private Roles role;
 
     @JsonDeserialize(using= CustomAuthorityDeserializer.class)

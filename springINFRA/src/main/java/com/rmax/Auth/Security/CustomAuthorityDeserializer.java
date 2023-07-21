@@ -1,4 +1,4 @@
-package com.rmax.Auth.AuthDTOs;
+package com.rmax.Auth.Security;
 
 import java.io.IOException;
 import java.util.Iterator;

@@ -8,4 +8,5 @@ import com.rmax.Core.Tenants.Tenant;
 @Repository
 public interface TenantRepository extends JpaRepository<Tenant, Long>{
     Tenant findByUsername(String username);
+    Tenant findByEmail(String email);
 }
