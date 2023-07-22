@@ -5,13 +5,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.rmax.Auth.AuthDTOs.LoginDTO;
 import com.rmax.Auth.AuthDTOs.LoginResponse;
+import com.rmax.Auth.CustomValidators.PasswordValidator;
 import com.rmax.Auth.JWT.JWTUtility;
 import com.rmax.Auth.Security.CustomUserDetailsService;
 import com.rmax.Core.Tenants.Tenant;
@@ -21,12 +20,10 @@ import com.rmax.Shared.TenantRepository;
 public class TenantService {
     @Autowired
     private JWTUtility jwtUtility;
-
-    private PasswordEncoder passwordEncoder;
-
     @Autowired
     private TenantRepository tenantRepository;
-
+    @Autowired
+    private PasswordValidator passwordValidation;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -56,14 +53,13 @@ public class TenantService {
         if(tenantRepository.findByUsername(tenant.getUsername()) != null || tenantRepository.findByEmail(tenant.getEmail()) != null){
             throw new Exception("Usuario já cadastrado");
         }
-        passwordEncoder = new BCryptPasswordEncoder();
         Tenant newTenant = new Tenant();
         newTenant.setEmail(tenant.getEmail()); 
         newTenant.setFirstName(tenant.getFirstName()); 
         newTenant.setLastName(tenant.getLastName()); 
         newTenant.setEmail(tenant.getEmail()); 
         newTenant.setRole(tenant.getRole()); 
-        newTenant.setPassword(passwordEncoder.encode(tenant.getPassword()));
+        newTenant.setPassword(passwordValidation.encode(tenant.getPassword()));
         newTenant.setUsername(tenant.getUsername());
         return tenantRepository.save(newTenant);
     }
