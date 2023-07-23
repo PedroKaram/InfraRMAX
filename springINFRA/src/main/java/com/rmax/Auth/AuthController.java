@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rmax.Application.TenantServices.TenantService;
 import com.rmax.Auth.AuthDTOs.LoginDTO;
 import com.rmax.Auth.AuthDTOs.LoginResponse;
+import com.rmax.Auth.TenantServices.TenantService;
 import com.rmax.Core.Tenants.Tenant;
 
 @RestController

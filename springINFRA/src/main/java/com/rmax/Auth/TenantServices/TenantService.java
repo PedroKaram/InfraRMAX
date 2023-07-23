@@ -1,4 +1,4 @@
-package com.rmax.Application.TenantServices;
+package com.rmax.Auth.TenantServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,14 +53,16 @@ public class TenantService {
         if(tenantRepository.findByUsername(tenant.getUsername()) != null || tenantRepository.findByEmail(tenant.getEmail()) != null){
             throw new Exception("Usuario já cadastrado");
         }
-        Tenant newTenant = new Tenant();
-        newTenant.setEmail(tenant.getEmail()); 
-        newTenant.setFirstName(tenant.getFirstName()); 
-        newTenant.setLastName(tenant.getLastName()); 
-        newTenant.setEmail(tenant.getEmail()); 
-        newTenant.setRole(tenant.getRole()); 
-        newTenant.setPassword(passwordValidation.encode(tenant.getPassword()));
-        newTenant.setUsername(tenant.getUsername());
+
+        Tenant newTenant = Tenant.builder()
+                            .firstName(tenant.getFirstName())
+                            .lastName(tenant.getLastName())
+                            .email(tenant.getEmail())
+                            .role(tenant.getRole())
+                            .password(passwordValidation.encode(tenant.getPassword()))
+                            .username(tenant.getUsername())
+                            .build();
+
         return tenantRepository.save(newTenant);
     }
 }

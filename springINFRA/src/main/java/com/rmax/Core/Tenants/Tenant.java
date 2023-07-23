@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.rmax.Auth.Security.CustomAuthorityDeserializer;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Tenant implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
