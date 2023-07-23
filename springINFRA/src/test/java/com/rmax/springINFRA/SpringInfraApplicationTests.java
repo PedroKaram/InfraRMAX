@@ -40,30 +40,30 @@ class SpringInfraApplicationTests {
 
 	@Test
     public void testAddTenant() throws Exception {
-			Roles givenRole = Roles.USER;
-			Tenant tenant = new Tenant();
-			tenant.setUsername("testuser");
-			tenant.setEmail("test@example.com");
-			tenant.setFirstName("John");
-			tenant.setLastName("Doe");
-			tenant.setRole(givenRole);
-			tenant.setPassword("Coxinha31@");
+		Roles givenRole = Roles.USER;
+		Tenant tenant = new Tenant();
+		tenant.setUsername("testuser");
+		tenant.setEmail("test@example.com");
+		tenant.setFirstName("John");
+		tenant.setLastName("Doe");
+		tenant.setRole(givenRole);
+		tenant.setPassword("Coxinha31@");
 
-			when(tenantRepository.findByUsername(tenant.getUsername())).thenReturn(null);
-			when(tenantRepository.findByEmail(tenant.getEmail())).thenReturn(null);
+		when(tenantRepository.findByUsername(tenant.getUsername())).thenReturn(null);
+		when(tenantRepository.findByEmail(tenant.getEmail())).thenReturn(null);
 
-			when(passwordValidation.encode(tenant.getPassword())).thenReturn("encodedPassword");
+		when(passwordValidation.encode(tenant.getPassword())).thenReturn("encodedPassword");
 
-			tenantService.addTenant(tenant);
+		tenantService.addTenant(tenant);
 
-			verify(tenantRepository).save(argThat(savedTenant ->
-					savedTenant.getUsername().equals(tenant.getUsername()) &&
-					savedTenant.getEmail().equals(tenant.getEmail()) &&
-					savedTenant.getFirstName().equals(tenant.getFirstName()) &&
-					savedTenant.getLastName().equals(tenant.getLastName()) &&
-					savedTenant.getRole().equals(tenant.getRole()) &&
-					savedTenant.getPassword().equals("encodedPassword")
-			));
+		verify(tenantRepository).save(argThat(savedTenant ->
+				savedTenant.getUsername().equals(tenant.getUsername()) &&
+				savedTenant.getEmail().equals(tenant.getEmail()) &&
+				savedTenant.getFirstName().equals(tenant.getFirstName()) &&
+				savedTenant.getLastName().equals(tenant.getLastName()) &&
+				savedTenant.getRole().equals(tenant.getRole()) &&
+				savedTenant.getPassword().equals("encodedPassword")
+		));
     }
 
 	@Test
